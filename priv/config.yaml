@@ -1,6 +1,5 @@
 ---
-app_name:
-  par_one: value
-  par_two:
-    - one
-    - two
+lager:
+  handlers:
+    lager_console_backend:
+      level: !<tag:yamerl,2012:atom>debug

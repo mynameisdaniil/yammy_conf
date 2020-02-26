@@ -12,6 +12,7 @@
 start(_StartType, _StartArgs) ->
   File = application:get_env(yammy_config, file, "./priv/config.yaml"),
   io:format("Loading YAML config: ~p\n", [File]),
+  yamerl_app:set_param(node_mods, [yamerl_node_erlang_atom]),
   [Yaml] = yamerl:decode_file(File, [str_node_as_binary]),
   AtomizedYaml = atomize_keys(Yaml),
   io:format("YAML contents: ~p\n", [AtomizedYaml]),
