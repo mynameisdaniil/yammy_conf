@@ -13,7 +13,7 @@ start(_StartType, _StartArgs) ->
   File = application:get_env(yammy_config, file, "./priv/config.yaml"),
   io:format("Loading YAML config: ~p\n", [File]),
   yamerl_app:set_param(node_mods, [yamerl_node_erlang_atom]),
-  [Yaml] = yamerl:decode_file(File, [str_node_as_binary]),
+  [Yaml] = yamerl:decode_file(File, []),
   AtomizedYaml = atomize_keys(Yaml),
   io:format("YAML contents: ~p\n", [AtomizedYaml]),
   application:set_env(AtomizedYaml, [{persistent, true}]),
@@ -24,14 +24,14 @@ stop(_State) ->
 
 %% internal functions
 
-atomize_keys(Proplist) when is_list(Proplist) ->
+atomize_keys([{_, _}|_] = Proplist) ->
   [ atomize_keys(Pair) || Pair <- Proplist ];
 
-atomize_keys({Key, Value}) when is_list(Value) ->
-  {binary_to_atom(Key, utf8), atomize_keys(Value)};
+atomize_keys({Key, [{_, _}|_] = Value}) ->
+  {list_to_atom(Key), atomize_keys(Value)};
 
 atomize_keys({Key, Value}) ->
-  {binary_to_atom(Key, utf8), Value};
+  {list_to_atom(Key), Value};
 
 atomize_keys(Value) ->
   Value.
