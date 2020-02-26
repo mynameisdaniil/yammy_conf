@@ -1,0 +1,6 @@
+---
+app_name:
+  par_one: value
+  par_two:
+    - one
+    - two

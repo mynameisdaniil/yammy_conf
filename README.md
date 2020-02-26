@@ -1,4 +1,4 @@
-yaconf
+yammy_conf
 =====
 
 An OTP application
@@ -6,4 +6,4 @@ An OTP application
 Build
 -----
 
-    $ rebar3 compile
+    $ make build
