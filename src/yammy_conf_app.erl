@@ -10,7 +10,7 @@
 -export([start/2, stop/1]).
 
 start(_StartType, _StartArgs) ->
-  File = application:get_env(yammy_config, file, "./priv/config.yaml"),
+  File = application:get_env(yammy_conf, file, "./priv/config.yaml"),
   yamerl_app:set_param(node_mods, [yamerl_node_erlang_atom]),
   [Yaml] = yamerl:decode_file(File, []),
   AtomizedYaml = atomize_keys(Yaml),
